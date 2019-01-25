@@ -45,7 +45,7 @@ set CYGWIN_MIRROR=http://linux.rz.ruhr-uni-bochum.de/download/cygwin
 set CYGWIN_USERNAME=root
 
 :: select the packages to be installed automatically via apt-cyg
-set CYGWIN_PACKAGES=bash-completion,bc,curl,expect,git,git-svn,gnupg,inetutils,mc,nc,openssh,openssl,perl,python,pv,ssh-pageant,subversion,unzip,vim,wget,zip,zstd
+set CYGWIN_PACKAGES=bash-completion,bc,curl,expect,git,git-svn,gnupg,inetutils,mc,nc,openssh,openssl,perl,python,pv,ssh-pageant,subversion,unzip,vim,wget,zip,zstd,autoconf,automake,binutils,cygport,curl,gmp,libgmp-devel,make,python,python-devel,python-crypto,python-openssl,python-setuptools,git,nano,openssh,openssl,openssl-devel,libffi-devel,gcc-core,gcc-g++
 
 :: if set to 'yes' the local package cache created by cygwin setup will be deleted after installation/update
 set DELETE_CYGWIN_PACKAGE_CACHE=yes
@@ -64,6 +64,9 @@ set ANSIBLE_GIT_BRANCH=stable-2.7
 set INSTALL_TESTSSL_SH=yes
 :: name of the GIT branch to install from, see https://github.com/drwetter/testssl.sh/
 set TESTSSL_GIT_BRANCH=2.9.5
+
+:: if set to 'yes' sshpasss will be installed automatically 
+set INSTALL_SSHPASS=yes
 
 :: use ConEmu based tabbed terminal instead of Mintty based single window terminal, see https://conemu.github.io/
 set INSTALL_CONEMU=yes
@@ -331,6 +334,22 @@ echo Creating [%Init_sh%]...
         echo fi
         echo.
     )
+    if "%INSTALL_SSHPASS%" == "yes" (
+        echo #
+        echo # Installing sshpass if required
+        echo #
+        echo if [[ ! -x /usr/local/bin/sshpass ]]; then
+        echo     echo "*******************************************************************************"
+        echo     echo "* Installing sshpass..."
+        echo     echo "*******************************************************************************"
+        echo     git clone https://github.com/Edgar0119/cygwin-sshpass.git /opt/cygwin-sshpass
+        echo     cd /opt/cygwin-sshpass
+        echo     ./configure
+        echo     make
+        echo     make install
+        echo fi
+        echo.
+    )    
     if "%INSTALL_BASH_FUNK%" == "yes" (
         echo.
         echo #
