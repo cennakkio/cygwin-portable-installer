@@ -344,6 +344,8 @@ echo Creating [%Init_sh%]...
         echo     echo "*******************************************************************************"
         echo     git clone https://github.com/Edgar0119/cygwin-sshpass.git /opt/cygwin-sshpass
         echo     cd /opt/cygwin-sshpass
+        echo     tar zxvf sshpass-1.05.tar.gz
+        echo     cd sshpass-1.05/
         echo     ./configure
         echo     make
         echo     make install
